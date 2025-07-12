@@ -6,13 +6,23 @@ on:
      branches:
        - main
        - 'feature/*'
+    
 env:
   MONGO_URI: 'mongodb+srv://supercluster.d83jj.mongodb.net/superData'
   MONGO_USERNAME: ${{ vars.MONGO_USERNAME }}
   MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
 jobs:
+  
   testing: 
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        node-version: [18, 19, 20]
+        exclude:
+          - os: macos-latest
+            node-version: 18
+    runs-on: ${{ matrix.os }}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4.2.2
@@ -20,10 +30,16 @@ jobs:
       - name: Setup node-version
         uses: actions/setup-node@v3.9.1
         with:
-          node-version: 18
+          node-version: ${{ matrix.node-version }}
 
       - name: installing npm
         run: npm install
 
       - name: test
         run: npm test
+
+      - name: upload artifacts
+        uses: actions/upload-artifact@v4.6.2
+        with:
+            name: test-result
+            path: test-results.xml
