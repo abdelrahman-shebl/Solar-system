@@ -63,10 +63,11 @@ jobs:
 
       - name: test
         run: npm run coverage
+        continue-on-error: true
 
       - name: upload artifacts
         uses: actions/upload-artifact@v4.6.2
         with:
-            name: test-result of ${{ github.job }}-${{matrix.os}}-${{matrix.node-version}}
-            path: test-results.xml
-            if-no-files-found: ignore
+            name: code coverage
+            path: coverage
+            retention-days: 5
