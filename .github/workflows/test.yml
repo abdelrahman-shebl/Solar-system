@@ -43,3 +43,4 @@ jobs:
         with:
             name: test-result of ${{ github.job }}
             path: test-results.xml
+            if-no-files-found: ignore
