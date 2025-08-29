@@ -11,7 +11,7 @@ pipeline {
       }
 
       stage('echo another ') { 
-            steps {
+            steps {  
               sh ' echo "thank you" '   
         }
       }
