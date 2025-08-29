@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('npm insatll') {
       steps {
-        sh ' npm install --no-audit ' 
+        sh ' npm install --no-audit '   
       }
     }
 
