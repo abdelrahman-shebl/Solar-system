@@ -1,12 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('VM Node Version') {
+    stage('npm insatll') {
       steps {
-        sh '''
-              node -v
-              npm -v
-          '''
+        sh ' npm insatll --no-audit '
       }
     }
 
