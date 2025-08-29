@@ -10,9 +10,9 @@ pipeline {
         }
       }
 
-      stage('echo another ') { 
-            steps {   
-              sh ' echo "thank you" '   
+      stage('echo other') {
+            steps {
+              sh ' echo "hello world" '   
         }
       }
 
