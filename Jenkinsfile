@@ -12,16 +12,14 @@ pipeline {
     stage('Trivy Scanner') {
       steps {
           sh '''
-            # // trivy image shebl22/solar-system:$GIT_COMMIT \
-               trivy image shebl22/solar-system:1cb7fde462c0ec85cec0dccfad7d9ff336d27942 \
-              --severity LOW,MEDIUM \
+               trivy image shebl22/solar-system:$GIT_COMMIT \
+               --severity LOW,MEDIUM \
               --exit-code 0 \
               --quiet \
               --format json -o trivy-image-MEDIUM.results.json
 
 
-            # // trivy image shebl22/solar-system:$GIT_COMMIT \
-               trivy image shebl22/solar-system:1cb7fde462c0ec85cec0dccfad7d9ff336d27942 \
+              trivy image shebl22/solar-system:$GIT_COMMIT \
               --severity HIGH,CRITICAL \
               --exit-code 1 \
               --quiet \
@@ -60,5 +58,5 @@ pipeline {
 
         publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: './', reportFiles: 'trivy-image-CRITICAL.results.html', reportName: 'trivy-image-CRITICAL.results.html', reportTitles: '', useWrapperFileDirectly: true])
       }
-    }
+    } 
 }
