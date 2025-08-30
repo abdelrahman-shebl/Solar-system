@@ -28,8 +28,8 @@ pipeline {
               --format json -o trivy-image-CRITICAL.results.json
           '''
       }
-      post{
-        always{
+      post {
+        always {
           sh '''
               trivy convert \
                 --format template --template "@/usr/local/share/trivy/templates/html.tpl" \
@@ -50,8 +50,8 @@ pipeline {
 
     }
 
-    post{
-      always{
+    post {
+      always {
         publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: './', reportFiles: 'trivy-image-MEDIUM.results.html', reportName: 'trivy-image-MEDIUM.results.html', reportTitles: '', useWrapperFileDirectly: true])
 
         publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: './', reportFiles: 'trivy-image-CRITICAL.results.html', reportName: 'trivy-image-CRITICAL.results.html', reportTitles: '', useWrapperFileDirectly: true])
