@@ -50,13 +50,15 @@ pipeline {
 
     }
 
-    post {
+    
+
+  }
+
+  post {
       always {
         publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: './', reportFiles: 'trivy-image-MEDIUM.results.html', reportName: 'trivy-image-MEDIUM.results.html', reportTitles: '', useWrapperFileDirectly: true])
 
         publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: './', reportFiles: 'trivy-image-CRITICAL.results.html', reportName: 'trivy-image-CRITICAL.results.html', reportTitles: '', useWrapperFileDirectly: true])
       }
     }
-
-  }
 }
