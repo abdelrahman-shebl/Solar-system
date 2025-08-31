@@ -15,7 +15,7 @@ pipeline {
           '''
               
       }   
-    
+                 
     }
        
     // stage('Trivy Scanner') {
