@@ -54,7 +54,7 @@ pipeline {
     stage('Push to docker hub') {
       steps {
 
-        withDockerRegistry(credentialsId: 'docker hub credentials') {
+        withDockerRegistry(credentialsId: 'docker hub credentials', url: "") {
             sh ' docker push shebl22/solar-system:$GIT_COMMIT  '
         }
          
@@ -70,11 +70,11 @@ pipeline {
       steps {
         
        sh 'git clone https://github.com/abdelrahman-shebl/solar-system-gitops-argocd'
-       dir("solar-system-gitops-argocd.git/kubernetes"){
+       dir("solar-system-gitops-argocd/kubernetes"){
         sh '''
 
         git checkout main 
-        git checkout -b fearure-$BUILD_ID
+        git checkout -b feature-$BUILD_ID
         sed -i "s#shebl22.*#shebl22/solar-system:$GIT_COMMIT#G" deployment.yml
         cat deployment.yml
 
@@ -83,7 +83,7 @@ pipeline {
 
         git add . 
         git commit -am "UPdated docker image"
-        git push -u origin fearure-$BUILD_ID
+        git push -u origin feature-$BUILD_ID
         '''
        }
          
