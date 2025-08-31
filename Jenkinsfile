@@ -12,55 +12,55 @@ pipeline {
 
     }
     
-    stage('Trivy Scanner') {
-      steps {
-          sh '''
-               trivy image shebl22/solar-system:$GIT_COMMIT \
-               --severity LOW,MEDIUM,HIGH \
-              --exit-code 0 \
-              --quiet \
-              --format json -o trivy-image-MEDIUM.results.json
+    // stage('Trivy Scanner') {
+    //   steps {
+    //       sh '''
+    //            trivy image shebl22/solar-system:$GIT_COMMIT \
+    //            --severity LOW,MEDIUM,HIGH \
+    //           --exit-code 0 \
+    //           --quiet \
+    //           --format json -o trivy-image-MEDIUM.results.json
 
 
-              trivy image shebl22/solar-system:$GIT_COMMIT \
-              --severity CRITICAL \
-              --exit-code 0 \
-              --quiet \
-              --format json -o trivy-image-CRITICAL.results.json
-          '''
-      }
-      post {
-        always {
-          sh '''
-              trivy convert \
-                --format template --template "@/usr/local/share/trivy/templates/html.tpl" \
-                --output trivy-image-MEDIUM.results.html trivy-image-MEDIUM.results.json
+    //           trivy image shebl22/solar-system:$GIT_COMMIT \
+    //           --severity CRITICAL \
+    //           --exit-code 0 \
+    //           --quiet \
+    //           --format json -o trivy-image-CRITICAL.results.json
+    //       '''
+    //   }
+    //   post {
+    //     always {
+    //       sh '''
+    //           trivy convert \
+    //             --format template --template "@/usr/local/share/trivy/templates/html.tpl" \
+    //             --output trivy-image-MEDIUM.results.html trivy-image-MEDIUM.results.json
 
-              trivy convert \
-                --format template --template "@/usr/local/share/trivy/templates/html.tpl" \
-                --output trivy-image-CRITICAL.results.html trivy-image-CRITICAL.results.json
-
-
-          '''
+    //           trivy convert \
+    //             --format template --template "@/usr/local/share/trivy/templates/html.tpl" \
+    //             --output trivy-image-CRITICAL.results.html trivy-image-CRITICAL.results.json
 
 
+    //       '''
 
-        }
 
-      }
 
-    }
+    //     }
 
-    stage('Push to docker hub') {
-      steps {
+    //   }
 
-        withDockerRegistry(credentialsId: 'docker hub credentials', url: "") {
-            sh ' docker push shebl22/solar-system:$GIT_COMMIT  '
-        }
+    // }
+
+    // stage('Push to docker hub') {
+    //   steps {
+
+    //     withDockerRegistry(credentialsId: 'docker hub credentials', url: "") {
+    //         sh ' docker push shebl22/solar-system:$GIT_COMMIT  '
+    //     }
          
-      } 
+    //   } 
 
-    }
+    // }
 
 
     stage('K8S Update Image Tag') {
@@ -104,9 +104,9 @@ pipeline {
 
 
 
-        publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: './', reportFiles: 'trivy-image-MEDIUM.results.html', reportName: 'trivy-image-MEDIUM.results.html', reportTitles: '', useWrapperFileDirectly: true])
+        // publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: './', reportFiles: 'trivy-image-MEDIUM.results.html', reportName: 'trivy-image-MEDIUM.results.html', reportTitles: '', useWrapperFileDirectly: true])
 
-        publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: './', reportFiles: 'trivy-image-CRITICAL.results.html', reportName: 'trivy-image-CRITICAL.results.html', reportTitles: '', useWrapperFileDirectly: true])
+        // publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, icon: '', keepAll: true, reportDir: './', reportFiles: 'trivy-image-CRITICAL.results.html', reportName: 'trivy-image-CRITICAL.results.html', reportTitles: '', useWrapperFileDirectly: true])
       }
     } 
 }
