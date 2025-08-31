@@ -12,7 +12,8 @@ pipeline {
       steps {
           sh '''  COMMIT=$(git rev-parse HEAD)
                   docker build -t shebl22/solar-system:$COMMIT  .   
-                echo "start docker"   
+                echo "start docker
+                "   
           '''
               
       }   
@@ -71,11 +72,12 @@ pipeline {
 
 
     stage('K8S Update Image Tag') {
+
       when{
           branch 'PR*'
       }
       steps {
-        
+      
        sh 'git clone https://github.com/abdelrahman-shebl/solar-system-gitops-argocd'
        dir("solar-system-gitops-argocd/kubernetes"){
         sh '''
@@ -105,7 +107,9 @@ pipeline {
 
       script {
         if (fileExists('solar-system-gitops-argocd')){
-          sh 'rm -rf solar-system-gitops-argocd'
+          sh '''rm -rf solar-system-gitops-argocd
+            echo "remove duplicates "
+          '''
         }
       }
 
