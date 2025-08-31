@@ -10,7 +10,8 @@ pipeline {
     
     stage('Build Docker Image') {
       steps {
-          sh ''' docker build -t shebl22/solar-system:$GIT_COMMIT .   
+          sh '''  COMMIT=$(git rev-parse HEAD)
+                  docker build -t shebl22/solar-system:$COMMIT  .   
                 echo "start docker" 
           '''
               
