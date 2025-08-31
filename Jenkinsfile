@@ -1,6 +1,9 @@
 pipeline {
   agent any
   environment {
+      MONGO_URI = 'mongodb+srv://supercluster.d83jj.mongodb.net/superData'
+      MONGO_USERNAME = credentials('mongo-user-name')
+      MONGO_PASSWORD = credentials('mongo-password')
       GITHUB_TOKEN = credentials('Github PAT')
   }
   stages {
@@ -9,9 +12,9 @@ pipeline {
       steps {
           sh ' docker build -t shebl22/solar-system:$GIT_COMMIT . '
       } 
-
-    }
     
+    }
+     
     // stage('Trivy Scanner') {
     //   steps {
     //       sh '''
