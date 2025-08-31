@@ -108,7 +108,7 @@ pipeline {
       script {
         if (fileExists('solar-system-gitops-argocd')){
           sh '''rm -rf solar-system-gitops-argocd
-            echo "remove duplicates "
+            echo "remove duplicates  "
           '''
         }
       }
