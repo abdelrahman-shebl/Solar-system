@@ -12,7 +12,7 @@ pipeline {
       steps {
           sh '''  COMMIT=$(git rev-parse HEAD)
                   docker build -t shebl22/solar-system:$COMMIT  .   
-                echo "start docker" 
+                echo "starting docker " 
           '''
               
       }   
