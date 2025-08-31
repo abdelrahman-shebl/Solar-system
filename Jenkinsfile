@@ -12,7 +12,7 @@ pipeline {
       steps {
           sh ' docker build -t shebl22/solar-system:$GIT_COMMIT .   '
              
-      }   
+      }     
     
     }
        
@@ -114,4 +114,3 @@ pipeline {
       }
     } 
 }
-
